@@ -1,0 +1,264 @@
+/* General page layout */
+.main-task-page {
+  /* padding: 24px; */
+}
+
+/* Section wrapper to keep headings aligned */
+.task-section {
+  margin-bottom: 32px;
+}
+
+/* Section title styling */
+.section-title {
+  font-size: 17px;
+  font-weight: 700;
+  padding-left: 4px;
+  margin-bottom: 10px; /* Ensure no extra spacing */
+  line-height: 1.2;
+}
+
+/* Task group (table container) */
+.task-group {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Table styling */
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; 
+}
+
+.task-table th,
+.task-table td {
+  width: 20%; /* Ensures all columns have equal width */
+  text-align: left;
+  padding: 10px;
+}
+
+.task-table th {
+  background-color: #f9f9f9;
+  font-size: 14px;
+  color: #555;
+}
+
+.task-table td {
+  font-size: 12px;
+  border-top: 1px solid #eee;
+  vertical-align: middle;
+}
+
+/* Task name cell */
+.task-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: normal; /* Allow wrapping */
+  word-break: break-word;
+}
+
+.task-name {
+  cursor: pointer;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  display: inline-block; /* Ensures the text behaves properly */
+  overflow: visible;
+  text-overflow: initial;
+}
+
+.task-table th:nth-child(1), /* Task */
+.task-table td:nth-child(1) {
+  width: 32%;
+}
+
+.task-table th:nth-child(2), /* Due Date */
+.task-table td:nth-child(2) {
+  width: 10%;
+}
+
+.task-table th:nth-child(3), /* Stage */
+.task-table td:nth-child(3) {
+  width: 12%;
+}
+
+.task-table th:nth-child(4), /* Priority */
+.task-table td:nth-child(4) {
+  width: 10%;
+}
+
+.task-table th:nth-child(5), /* Assignee */
+.task-table td:nth-child(5) {
+  width: 14%;
+}
+
+.task-table th:nth-child(6), /* Category */
+.task-table td:nth-child(6) {
+  width: 14%;
+}
+
+.task-table th:nth-child(7), /* Actions */
+.task-table td:nth-child(7) {
+  width: 8%;
+  text-align: center;
+}
+
+
+
+/* Checkbox styling */
+.circle {
+  width: 40px;
+  height: 20px;
+  border: 2px solid black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.circle.done {
+  background-color: #fdd835;
+  border-color: #fdd835;
+  color: black;
+  font-size: 0.75rem;
+}
+
+/* Due date */
+.due-date-cell .due-label {
+  font-weight: 600;
+  color: #ff9900;
+}
+
+/* Stage badge */
+.stage-badge {
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.stage-inprogress {
+  background-color: #ffe460;
+  color: #000;
+}
+
+.stage-notstarted {
+  background-color: #fbde6a;
+  color: #333;
+}
+
+/* Priority badge */
+.priority-badge {
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.priority-high {
+  background-color: #b46b0d;
+  color: #fff;
+}
+
+.priority-medium {
+  background-color: #f7c948;
+  color: #000;
+}
+
+.priority-low {
+  background-color: #f5f5dc;
+  color: #333;
+}
+
+/* Avatar */
+.avatar-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+/* No tasks row */
+.no-tasks {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+  justify-content: center;
+}
+
+.actions-cell {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 5px;
+  transition: color 0.2s ease-in-out;
+}
+
+.edit-icon {
+  color: #7d7c7c; /* Blue */
+}
+
+.edit-icon:hover {
+  color: #353535; /* Darker Blue */
+}
+
+.delete-icon {
+  color: #dc3545; /* Red */
+}
+
+.delete-icon:hover {
+  color: #a71d2a; /* Darker Red */
+}
+
+.assignee-list {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.avatar-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid white;
+  position: relative;
+  margin-left: -10px;
+}
+
+.assignee-list img:first-child {
+  margin-left: 0;
+}
+
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-task-btn {
+  background-color: #0056ff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out;
+}
+
+.new-task-btn svg {
+  margin-right: px;
+}
+

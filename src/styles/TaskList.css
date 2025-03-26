@@ -1,0 +1,135 @@
+.tasklist-container {
+  width: 550px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  font-family: 'Inter', sans-serif;
+  height: 290px;
+}
+
+.tasklist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.tasklist-header h3 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.menu-icon {
+  cursor: pointer;
+}
+
+/* Table Headers */
+.tasklist-headers {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 8px;
+}
+
+.task-header {
+  flex: 2;
+}
+
+.task-due-header {
+  flex: 1;
+  text-align: center;
+}
+
+.task-priority-header {
+  flex: 1;
+  text-align: center;
+}
+
+/* Task List */
+.tasklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 8px; 
+}
+
+.task-info {
+  flex: 2;
+  display: flex;
+  align-items: center;
+}
+
+.task-due {
+  flex: 1;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #f5a623
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.circle.done {
+  background-color: #fdd835;
+  border-color: #fdd835;
+  color: black;
+  font-size: 0.75rem;
+}
+
+.task-text {
+  flex: 2;
+  font-size: 0.9rem;
+}
+
+.strike {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.task-priority {
+  flex: 0.8; /* Ensures equal spacing */
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 4px 6px;
+  border-radius: 8px;
+  text-transform: capitalize;
+  min-width: 60px;
+}
+
+
+/* Priority colors */
+.task-priority.high {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.task-priority.medium {
+  background-color: #f5a623;
+  color: white;
+}
+
+.task-priority.low {
+  background-color: #4caf50;
+  color: white;
+}

@@ -1,0 +1,91 @@
+.upcoming-events-container {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .up-event-card {
+    display: flex;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    min-height: 80px;
+  }
+  
+  .event-date {
+    background: #a5e1ff;
+    color: rgb(53, 53, 53);
+    padding: 12px 3px;
+    text-align: center;
+    border-radius: 8px;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .event-time {
+    font-size: 10px;
+    font-weight: bold;
+    margin-bottom: 3px;
+  }
+  
+  .event-day-month {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .event-details {
+    margin-left: 15px;
+    flex: 1;
+  }
+  
+  .event-details h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .event-details p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  .view-all-container {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .view-all-button {
+    display: inline-block;
+    padding: 8px 15px;
+    color: rgb(32, 32, 32);
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .view-all-button:hover {
+    background: #0056b3;
+  }
+  

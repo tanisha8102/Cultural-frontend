@@ -1,0 +1,147 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .popup-container {
+    background: #fff;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .popup-header h2 {
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .close-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .popup-row {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds space between icon, label, and value */
+    margin-bottom: 8px;
+  }
+
+  .popup-icon {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .popup-label {
+    color: #444;
+    min-width: 80px; /* Ensures labels align properly */
+    margin-right: 20px;
+  }
+ 
+
+  
+  .status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .status.in-progress {
+    background: #f7c32e;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .status.not-started {
+    background: #ddd;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .priority {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .priority.high {
+    background: #e74c3c;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .priority.medium {
+    background: #f39c12;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .priority.low {
+    background: #27ae60;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .assignee {
+    display: flex;
+    align-items: center;
+    gap: 10px;font-size: 14px;
+  }
+  
+  .assignee img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .popup-description {
+    font-size: 14px;
+    color: #666;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .popup-footer {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  

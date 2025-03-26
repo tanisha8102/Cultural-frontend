@@ -1,0 +1,80 @@
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  background-color: #f9f6f2;
+  min-height: 100vh;
+  /* padding: 20px; */
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  padding: 20px;
+  
+}
+
+/* Stats Cards */
+.stats-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.stat-card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.stat-card .stat-number {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.stat-card .stat-label {
+  display: block;
+  margin-top: 5px;
+  color: gray;
+}
+
+.stat-card a {
+  display: block;
+  margin-top: 10px;
+  color: #156bff;
+  text-decoration: none;
+}
+
+
+
+/* Upcoming Events & Calendar */
+.main-content {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.upcoming-events, .calendar-section {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-section {
+  flex: 1; /* Allows it to expand and fill available space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-widget {
+  width: 100%; /* Takes full width of its container */
+  max-width: 500px; /* Set max-width to maintain a nice layout */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
