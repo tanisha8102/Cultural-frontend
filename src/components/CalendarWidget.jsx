@@ -23,13 +23,17 @@ const CalendarWidget = () => {
 
   const handleDateChange = (selectedDate) => {
     setDate(selectedDate);
-    const formattedDate = selectedDate.toISOString().split("T")[0];
-    const filteredEvents = events.filter(
-      (event) =>
-        new Date(event.dateTime).toISOString().split("T")[0] === formattedDate
-    );
+    
+    const formattedDate = selectedDate.toLocaleDateString("en-CA"); // Format as YYYY-MM-DD
+    
+    const filteredEvents = events.filter((event) => {
+      const eventDate = new Date(event.dateTime).toLocaleDateString("en-CA");
+      return eventDate === formattedDate;
+    });
+  
     setSelectedEvents(filteredEvents);
   };
+  
 
   return (
     <div className="calendar-container">
@@ -41,15 +45,16 @@ const CalendarWidget = () => {
         nextLabel="›"
         prevLabel="‹"
         tileClassName={({ date }) => {
-          const formattedDate = date.toISOString().split("T")[0];
-          return events.some(
-            (event) =>
-              new Date(event.dateTime).toISOString().split("T")[0] ===
-              formattedDate
-          )
+          const formattedDate = date.toLocaleDateString("en-CA");
+          
+          return events.some((event) => {
+            const eventDate = new Date(event.dateTime).toLocaleDateString("en-CA");
+            return eventDate === formattedDate;
+          })
             ? "event-highlight"
             : null;
         }}
+        
       />
 
       <div className="event-list">

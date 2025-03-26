@@ -118,13 +118,13 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.create-event-button{
-    background-color: #0056ff;
-    color: white;
-    padding: 4px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease-in-out;
+.create-event-button {
+    background-color: #0056ff !important;
+    color: white !important;
+    padding: 6px 16px !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease-in-out !important;
 }
+

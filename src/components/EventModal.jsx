@@ -3,6 +3,7 @@ import { FiX, FiCalendar, FiMapPin, FiLink, FiFileText } from "react-icons/fi";
 import { toast } from "react-toastify";
 import config from "../../config";
 import "../styles/EventModal.css";
+import fetchWithAuth from "../../fetchWithAuth";
 
 const EventModal = ({ onClose, onEventAdded }) => {
     const API_BASE_URL = config.API_BASE_URL;
@@ -22,7 +23,6 @@ const EventModal = ({ onClose, onEventAdded }) => {
             return;
         }
     
-        const token = localStorage.getItem("token");
         const creatorId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
     
         if (!creatorId) {
@@ -30,17 +30,11 @@ const EventModal = ({ onClose, onEventAdded }) => {
             return;
         }
     
-        if (!token) {
-            toast.error("Authorization token missing. Please log in again.");
-            return;
-        }
-    
         try {
-            const response = await fetch(`${API_BASE_URL}/api/events`, {
+            const response = await fetchWithAuth(`${API_BASE_URL}/api/events`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({ ...event, createdBy: creatorId }),
             });
@@ -59,6 +53,7 @@ const EventModal = ({ onClose, onEventAdded }) => {
             toast.error(error.message || "Server error. Please try again.");
         }
     };
+    
     
     return (
         <div className="modal-overlay">

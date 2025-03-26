@@ -18,7 +18,7 @@
     align-items: center;
   }
   
-  .modal-content {
+  .feedback-modal-content {
     background: white;
     padding: 20px; /* Reduced padding */
     border-radius: 10px;

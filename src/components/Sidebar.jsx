@@ -35,8 +35,31 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
+    localStorage.removeItem("refreshToken");
     navigate("/");
   };
+
+  const refreshAccessToken = async () => {
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) return handleLogout();
+
+      const { data } = await axios.post(`${API_BASE_URL}/api/auth/refresh-token`, { refreshToken });
+
+      localStorage.setItem("token", data.accessToken);
+      return data.accessToken;
+    } catch (error) {
+      handleLogout();
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshAccessToken();
+    }, 14 * 60 * 1000); // Refresh every 14 minutes
+
+    return () => clearInterval(interval);
+  }, []);
 
   const userName = localStorage.getItem("userName") || "User";
 
@@ -94,7 +117,7 @@ const Sidebar = () => {
         >
           <FiSpeaker className="menu-icon" /> Announcements
         </li>
-        <li
+        {/* <li
           className={location.pathname === "/notifications" ? "active" : ""}
           onClick={() => navigate("/notifications")}
         >
@@ -102,7 +125,7 @@ const Sidebar = () => {
           {unreadNotifications > 0 && (
             <span className="notification-badge">{unreadNotifications}</span>
           )}
-        </li>
+        </li> */}
         <li
           className={location.pathname === "/profile" ? "active" : ""}
           onClick={() => navigate("/profile")}

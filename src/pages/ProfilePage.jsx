@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import FeedbackModal from "../components/FeedbackForm";
 
 const ProfilePage = () => {
-  const [userData, setUserData] = useState({ name: "", email: "", contact: "", dob: "", address: "", profilePhoto: "" });
+  const [userData, setUserData] = useState({ name: "", email: "", phoneNumber: "", dob: "", address: "", profilePhoto: "" });
   const [photo, setPhoto] = useState(null);
   const [preview, setPreview] = useState(defaultProfile);
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,12 @@ const ProfilePage = () => {
     const fetchUser = async () => {
       try {
         const { data } = await axios.get(`${API_BASE_URL}/api/users/${userId}`);
-        setUserData(data);
+  
+        setUserData({
+          ...data,
+          dob: data.dob ? data.dob.split("T")[0] : "",  // Convert ISO date to YYYY-MM-DD
+        });
+  
         setPreview(data.profilePhoto || defaultProfile);
       } catch (error) {
         console.error("Error fetching user", error);
@@ -30,12 +35,18 @@ const ProfilePage = () => {
     };
     fetchUser();
   }, [userId]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "contact" && !/^\d{0,10}$/.test(value)) return;
-    setUserData((prev) => ({ ...prev, [name]: value }));
+  
+    setUserData((prev) => ({
+      ...prev,
+      [name === "contact" ? "phoneNumber" : name]: value, // Map "contact" to "phoneNumber"
+    }));
   };
+  
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
@@ -52,16 +63,11 @@ const ProfilePage = () => {
       toast.error("Name cannot be empty.");
       return;
     }
-
-    if (userData.contact && !/^\d{10}$/.test(userData.contact)) {
-      toast.error("Contact number must be exactly 10 digits.");
-      return;
-    }
-
+  
     setLoading(true);
     try {
       let profilePhoto = userData.profilePhoto;
-
+  
       if (photo) {
         const formData = new FormData();
         formData.append("file", photo);
@@ -70,11 +76,20 @@ const ProfilePage = () => {
         });
         profilePhoto = uploadRes.data.url;
       }
-
-      const updatedUser = { ...userData, profilePhoto };
+  
+      const updatedUser = {
+        ...userData,
+        dob: userData.dob ? new Date(userData.dob).toISOString() : null, // Convert to ISO
+        profilePhoto,
+      };
+  
       const { data } = await axios.put(`${API_BASE_URL}/api/users/${userId}`, updatedUser);
-
-      setUserData(data);
+  
+      setUserData({
+        ...data,
+        dob: data.dob ? data.dob.split("T")[0] : "", // Reformat after save
+      });
+  
       setPreview(profilePhoto || defaultProfile);
       toast.success("Profile updated successfully!");
     } catch (error) {
@@ -84,6 +99,7 @@ const ProfilePage = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="dashboard-container">
@@ -113,7 +129,7 @@ const ProfilePage = () => {
               </div>
               <div className="profile-column">
                 <label>Contact</label>
-                <input type="text" name="contact" value={userData.contact} onChange={handleChange} placeholder="Enter your contact" maxLength="10" />
+                <input type="text" name="contact" value={userData.phoneNumber} onChange={handleChange} placeholder="Enter your contact" maxLength="10" />
                 <label>Date of Birth</label>
                 <input type="date" name="dob" value={userData.dob} onChange={handleChange} />
               </div>

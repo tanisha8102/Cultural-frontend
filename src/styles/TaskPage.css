@@ -109,22 +109,26 @@
 
 /* Checkbox styling */
 .circle {
-  width: 40px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border: 2px solid black;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-shrink: 0; /* Prevents the circle from shrinking */
 }
 
 .circle.done {
-  background-color: #fdd835;
-  border-color: #fdd835;
+  background-color: #39b0ff;
+  border-color: #ffffff;
   color: black;
   font-size: 0.75rem;
+  width: 24px;
+  height: 24px;
 }
+
 
 /* Due date */
 .due-date-cell .due-label {

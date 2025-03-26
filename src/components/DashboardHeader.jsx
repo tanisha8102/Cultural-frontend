@@ -62,7 +62,7 @@ const DashboardHeader = ({ onSearch, placeholder = "Search..." ,searchType = "ta
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetchNotifications();
+      // fetchNotifications();
     }, 5000); // Every 5 seconds (adjustable)
 
     return () => clearInterval(interval); // Cleanup
@@ -79,13 +79,13 @@ const DashboardHeader = ({ onSearch, placeholder = "Search..." ,searchType = "ta
       />
 
       <div className="header-actions">
-        Notification Icon
+        {/* Notification Icon
         <Link to="/notifications" className="notification-icon">
           <FiBell />
           {unreadCount > 0 && (
             <span className="notification-badge">{unreadCount}</span>
           )}
-        </Link>
+        </Link> */}
 
         {/* Profile */}
         <div className="profile-circle">

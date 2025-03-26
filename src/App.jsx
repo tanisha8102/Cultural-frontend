@@ -13,6 +13,7 @@ import EventPage from "./pages/EventPage";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import AnnouncementPage from "./pages/AnnouncementPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 
@@ -32,15 +33,20 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        <Route element={<ProtectedRoute />}>
+
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/tasks" element={<TaskPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/notifications" element={<NotificationPage />} />
         <Route path="/memeber-management" element={<UserListPage />} />
         <Route path="/events" element={<EventPage />} />
+        <Route path="/announcement" element={<AnnouncementPage />} />
+
+        </Route>
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/announcement" element={<AnnouncementPage />} />
       
       </Routes>
     </Router>

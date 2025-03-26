@@ -33,6 +33,7 @@ const Login = () => {
       const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
@@ -41,7 +42,8 @@ const Login = () => {
       if (response.ok) {
         // Save token & user data based on "Remember Me"
         const storage = rememberMe ? localStorage : sessionStorage;
-        storage.setItem("token", data.token);
+        storage.setItem("token", data.accessToken);
+        storage.setItem("refreshToken", data.refreshToken);
         storage.setItem("userName", data.user.name);
         storage.setItem("userId", data.user.id);
         storage.setItem("role", data.user.role);
@@ -63,6 +65,13 @@ const Login = () => {
       setError("Something went wrong. Please try again.");
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/dashboard");
+    }
+  }, []);
+  
 
   return (
     <div className="login-container">
@@ -97,19 +106,19 @@ const Login = () => {
               className="input-field"
             />
 
-<div className="form-options">
-  <label>
-    <input
-      type="checkbox"
-      checked={rememberMe}
-      onChange={(e) => setRememberMe(e.target.checked)}
-    />{" "}
-    Remember me
-  </label>
-  <Link to="/forgot-password">Forgot password?</Link>
-</div>
+              <div className="form-options">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />{" "}
+                  Remember me
+                </label>
+                <Link to="/forgot-password">Forgot password?</Link>
+              </div>
 
-            <button type="submit" className="submit-btn">
+            <button type="submit" className="submit-button">
               Sign In
             </button>
           </form>

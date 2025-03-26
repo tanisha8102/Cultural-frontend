@@ -36,7 +36,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="feedback-modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>&times;</button>
         <h2>Feedback Form</h2>
         <form className="feedback-form" onSubmit={handleSubmit}>

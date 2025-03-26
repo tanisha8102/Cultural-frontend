@@ -80,7 +80,7 @@ const Signup = () => {
               required
               className="input-field"
             />
-            <button type="submit" className="submit-btn">
+            <button type="submit" className="submit-button">
               Sign Up
             </button>
           </form>

@@ -10,6 +10,7 @@ import EventModal from "../components/EventModal";
 import EditEventModal from "../components/EditEventModal";
 import DeleteModal from "../components/DeleteModal";
 import "../styles/EventPage.css"
+import noEvent from "../assets/no-event-bg.png";
 
 const EventPage = () => {
     const [userName, setUserName] = useState("");
@@ -122,77 +123,89 @@ const EventPage = () => {
                     )}
                 </Box>
                 <Grid container spacing={3} rowSpacing={7}>
-                    {filteredEvents.map((event) => (
-                        <Grid item xs={12} sm={6} md={4} key={event._id}>
-                            <Box sx={{
-                                borderRadius: 2,
-                                p: 2,
-                                boxShadow: 3,
-                                background: '#fff',
-                                transition: '0.3s',
-                                height: '100%',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                                position: 'relative'
-                            }}>
-                                <Box display="flex" justifyContent="space-between" alignItems="center">
-                                    <Typography 
-                                        fontWeight="bold" 
-                                        sx={{
-                                            whiteSpace: 'nowrap',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                            maxWidth: '80%'
-                                        }}
-                                    >
-                                        {event.name}
-                                    </Typography>
-                                    {userRole === "admin" && (
-                                        <IconButton onClick={(e) => handleMenuOpen(e, event._id)}>
-                                            <MoreVertIcon />
-                                        </IconButton>
-                                    )}
-                                </Box>
+    {filteredEvents.length > 0 ? (
+        filteredEvents.map((event) => (
+            <Grid item xs={12} sm={6} md={4} key={event._id}>
+                <Box
+                    sx={{
+                        borderRadius: 2,
+                        p: 2,
+                        boxShadow: 3,
+                        background: '#fff',
+                        transition: '0.3s',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        position: 'relative'
+                    }}
+                >
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography 
+                            fontWeight="bold" 
+                            sx={{
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                maxWidth: '80%'
+                            }}
+                        >
+                            {event.name}
+                        </Typography>
+                        {userRole === "admin" && (
+                            <IconButton onClick={(e) => handleMenuOpen(e, event._id)}>
+                                <MoreVertIcon />
+                            </IconButton>
+                        )}
+                    </Box>
 
-                                <Menu
-                                    anchorEl={menuAnchor}
-                                    open={Boolean(menuAnchor) && selectedEvent === event._id}
-                                    onClose={handleMenuClose}
-                                >
-                                    <MenuItem onClick={() => handleEdit(event._id)}>Edit</MenuItem>
-                                    <MenuItem onClick={() => handleDelete(event._id)}>Delete</MenuItem>
-                                </Menu>
+                    <Menu
+                        anchorEl={menuAnchor}
+                        open={Boolean(menuAnchor) && selectedEvent === event._id}
+                        onClose={handleMenuClose}
+                    >
+                        <MenuItem onClick={() => handleEdit(event._id)}>Edit</MenuItem>
+                        <MenuItem onClick={() => handleDelete(event._id)}>Delete</MenuItem>
+                    </Menu>
 
-                                <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-                                    {event.description}
-                                </Typography>
-                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                                    <Typography variant="body2" display="flex" alignItems="center">
-                                        <CalendarIcon fontSize="small" sx={{ mr: 1, color: 'primary.main' }} />
-                                        {new Date(event.dateTime).toLocaleString()}
-                                    </Typography>
-                                    <Typography variant="body2" display="flex" alignItems="center">
-                                        <LocationIcon fontSize="small" sx={{ mr: 1, color: 'secondary.main' }} />
-                                        {event.location}
-                                    </Typography>
-                                    <Box display="flex" alignItems="center">
-                                        <IconButton
-                                            component={event.meetLink ? "a" : "div"}
-                                            href={event.meetLink || "#"}
-                                            target="_blank"
-                                            color="primary"
-                                            disabled={!event.meetLink}
-                                        >
-                                            <LinkIcon />
-                                        </IconButton>
-                                        {!event.meetLink && <Typography variant="caption" color="textSecondary">No Link</Typography>}
-                                    </Box>
-                                </Box>
-                            </Box>
-                        </Grid>
-                    ))}
-                </Grid>
+                    <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+                        {event.description}
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                        <Typography variant="body2" display="flex" alignItems="center">
+                            <CalendarIcon fontSize="small" sx={{ mr: 1, color: 'primary.main' }} />
+                            {new Date(event.dateTime).toLocaleString()}
+                        </Typography>
+                        <Typography variant="body2" display="flex" alignItems="center">
+                            <LocationIcon fontSize="small" sx={{ mr: 1, color: 'secondary.main' }} />
+                            {event.location}
+                        </Typography>
+                        <Box display="flex" alignItems="center">
+                            <IconButton
+                                component={event.meetLink ? "a" : "div"}
+                                href={event.meetLink || "#"}
+                                target="_blank"
+                                color="primary"
+                                disabled={!event.meetLink}
+                            >
+                                <LinkIcon />
+                            </IconButton>
+                            {!event.meetLink && <Typography variant="caption" color="textSecondary">No Link</Typography>}
+                        </Box>
+                    </Box>
+                </Box>
+            </Grid>
+        ))
+    ) : (
+        <Grid item xs={12} display="flex" justifyContent="center">
+            <Box textAlign="center">
+                <img  className="no-events-img" src={noEvent} alt="No Events" style={{ width: "600px", height: "auto", opacity: 0.8 }} />
+               
+            </Box>
+        </Grid>
+    )}
+</Grid>
+
             </div>
             {isModalOpen && <EventModal onClose={closeModal} onEventAdded={handleEventAdded} />}
             {isEditModalOpen && eventToEdit && (
