@@ -161,27 +161,28 @@ const TaskPage = () => {
 
   const toggleDone = async (id) => {
     try {
-      const updatedTask = tasks.find((task) => task._id === id);
-      if (!updatedTask) return;
+      const taskToUpdate = tasks.find((task) => task._id === id);
+      if (!taskToUpdate) return;
   
-      const updatedStatus = !updatedTask.done;
+      const updatedStatus = !taskToUpdate.done;
   
-      await axios.put(`${API_BASE_URL}/api/tasks/update/${id}`, {
+      const response = await axios.put(`${API_BASE_URL}/api/tasks/update/${id}`, {
         done: updatedStatus,
         status: updatedStatus ? "Completed" : "In progress",
       });
   
-      setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task._id === id
-            ? { ...task, done: updatedStatus, status: updatedStatus ? "Completed" : "In progress" }
-            : task
-        )
-      );
+      if (response.status === 200) {
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task._id === id ? { ...task, done: updatedStatus, status: updatedStatus ? "Completed" : "In progress" } : task
+          )
+        );
+      }
     } catch (error) {
       console.error("Error updating task status:", error);
     }
   };
+  
   
 
   const handleEdit = (task) => setEditTask(task);
@@ -331,23 +332,23 @@ const TaskGroup = ({
           ) : (
             filteredTasks.map((task) => (
               <tr key={task._id}>
-                <td className="task-name-cell">
-                <span
-  className={`circle ${task.done ? "done" : ""}`}
-  onClick={() => toggleDone(task._id)}
->
-  {task.done && "✔"}
-</span>
+               <td className="task-name-cell">
+  <span
+    className={`circle ${task.done ? "done" : ""}`}
+    onClick={() => toggleDone(task._id)}
+  >
+    {task.done ? "✔" : ""}
+  </span>
 
-                  <span
-                    className="task-name"
-                    onClick={() => setSelectedTaskDetails(task)}
-                    style={{ cursor: "pointer", textDecoration: "underline" }} // 👈 Added styles
-                  >
-                    {task.name.replace(/\b\w/g, (char) => char.toUpperCase())}
-                  </span>
+  <span
+    className="task-name"
+    onClick={() => setSelectedTaskDetails(task)}
+    style={{ cursor: "pointer", textDecoration: "underline" }}
+  >
+    {task.name.replace(/\b\w/g, (char) => char.toUpperCase())}
+  </span>
+</td>
 
-                </td>
                 <td className="due-date-cell">
                   <span className="due-label">{task.day}</span>
                 </td>

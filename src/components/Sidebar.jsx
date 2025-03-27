@@ -105,12 +105,12 @@ const Sidebar = () => {
         >
           <FiUsers className="menu-icon" /> Members
         </li>
-        <li
+        {/* <li
           className={location.pathname === "/resource-management" ? "active" : ""}
           onClick={() => navigate("/resource-management")}
         >
           <FiFolder className="menu-icon" /> Resources
-        </li>
+        </li> */}
         <li
           className={location.pathname === "/announcement" ? "active" : ""}
           onClick={() => navigate("/announcement")}

@@ -5,12 +5,17 @@ import "../styles/UserListPage.css";
 import { FaTrash } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
 import DashboardHeader from "../components/DashboardHeader";
+import DeleteModal from "../components/DeleteModal";
 
 const UserListPage = () => {
   const API_BASE_URL = config.API_BASE_URL;
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [checkedRole, setCheckedRole] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const token = localStorage.getItem("token");
   const axiosInstance = axios.create({
@@ -33,18 +38,34 @@ const UserListPage = () => {
     try {
       const { data } = await axiosInstance.get("/users/");
       setUsers(data);
+      setFilteredUsers(data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
   };
 
-  const deleteUser = async (id) => {
+  const deleteUser = async () => {
+    if (!selectedUser) return;
+
     try {
-      await axiosInstance.delete(`/users/${id}`);
-      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+      await axiosInstance.delete(`/users/${selectedUser._id}`);
+      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== selectedUser._id));
+      setFilteredUsers((prevUsers) => prevUsers.filter((user) => user._id !== selectedUser._id));
+      setShowModal(false);
+      setSelectedUser(null);
     } catch (error) {
       console.error("Error deleting user:", error);
     }
+  };
+
+  const handleDeleteClick = (user) => {
+    setSelectedUser(user);
+    setShowModal(true);
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    setFilteredUsers(users.filter(user => user.name.toLowerCase().includes(query.toLowerCase())));
   };
 
   if (!checkedRole) {
@@ -55,7 +76,7 @@ const UserListPage = () => {
     <div className="dashboard-container">
       <Sidebar />
       <div className="dashboard-content">
-        <DashboardHeader />
+        <DashboardHeader onSearch={handleSearch} searchType="User" />
         <div className="userlist-container">
           <h2>Members List</h2>
 
@@ -75,10 +96,10 @@ const UserListPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.length > 0 ? (
-                  users.map((user) => (
+                {filteredUsers.length > 0 ? (
+                  filteredUsers.map((user) => (
                     <tr key={user._id}>
-                     <td>
+                      <td>
                         <div className="userprofile-container">
                           {user.profilePhoto ? (
                             <img
@@ -100,7 +121,7 @@ const UserListPage = () => {
                       <td>
                         <div
                           className="delete-icon"
-                          onClick={() => deleteUser(user._id)}
+                          onClick={() => handleDeleteClick(user)}
                           title="Delete User"
                         >
                           <FaTrash />
@@ -118,6 +139,14 @@ const UserListPage = () => {
           )}
         </div>
       </div>
+
+      {showModal && (
+        <DeleteModal
+          task={selectedUser}
+          onClose={() => setShowModal(false)}
+          onConfirm={deleteUser}
+        />
+      )}
     </div>
   );
 };

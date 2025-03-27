@@ -5,7 +5,7 @@ import "../styles/DashboardHeader.css";
 import config from "../../config";
 import { Link } from "react-router-dom"; // Assuming you are using react-router
 
-const DashboardHeader = ({ onSearch, placeholder = "Search..." ,searchType = "tasks"}) => {
+const DashboardHeader = ({ onSearch, placeholder = "Search..." ,searchType = "."}) => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [userName, setUserName] = useState("User");
   const [unreadCount, setUnreadCount] = useState(0); // For notification count

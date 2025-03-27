@@ -7,8 +7,9 @@ import config from "../../config";
 
 const Dashboard = () => {
   const [upcomingEventsCount, setUpcomingEventsCount] = useState(0);
-  const [userCount, setUserCount] = useState(0); 
-  const [pendingTasksCount, setPendingTasksCount] = useState(0); // State for pending tasks
+  const [userCount, setUserCount] = useState(0);
+  const [pendingTasksCount, setPendingTasksCount] = useState(0);
+  const [announcementCount, setAnnouncementCount] = useState(0); // State for announcements
   const API_BASE_URL = config.API_BASE_URL;
 
   useEffect(() => {
@@ -42,9 +43,20 @@ const Dashboard = () => {
       }
     };
 
+    const fetchAnnouncementCount = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/announcements/`);
+        const data = await response.json();
+        if (response.ok) setAnnouncementCount(data.count);
+      } catch (error) {
+        console.error("Error fetching announcements count:", error);
+      }
+    };
+
     fetchUpcomingEvents();
     fetchUserCount();
     fetchPendingTasks();
+    fetchAnnouncementCount();
   }, []);
 
   return (
@@ -63,14 +75,14 @@ const Dashboard = () => {
             <a href="memeber-management">View all &gt;</a>
           </div>
           <div className="stat-card yellow">
-            <span className="stat-number">{pendingTasksCount}</span> {/* Updated here */}
+            <span className="stat-number">{pendingTasksCount}</span>
             <span className="stat-label">Pending Tasks</span>
             <a href="/tasks">View all &gt;</a>
           </div>
           <div className="stat-card pink">
-            <span className="stat-number">0</span>
-            <span className="stat-label">Resources</span>
-            <a href="#">View all &gt;</a>
+            <span className="stat-number">{announcementCount}</span> {/* Updated here */}
+            <span className="stat-label">Announcements</span>
+            <a href="/announcements">View all &gt;</a>
           </div>
         </div>
 

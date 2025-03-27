@@ -3,9 +3,10 @@ import Sidebar from "../components/Sidebar";
 import "../styles/Announcements.css";
 import DashboardHeader from "../components/DashboardHeader";
 import AnnouncementModal from "../components/AnnouncementModal";
+import EditAnnouncementModal from "../components/EditAnnouncementModal";
 import DeleteModal from "../components/DeleteModal";
 import { toast } from "react-toastify";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import config from "../../config";
 
 const AnnouncementPage = () => {
@@ -14,28 +15,47 @@ const AnnouncementPage = () => {
   const [userName, setUserName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [announcements, setAnnouncements] = useState([]);
   const [userRole, setUserRole] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [announcementToDelete, setAnnouncementToDelete] = useState(null);
+  const [announcementToEdit, setAnnouncementToEdit] = useState(null);
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/announcements`);
         const data = await response.json();
-        setAnnouncements(data);
+  
+        if (data && Array.isArray(data.announcements)) {
+          setAnnouncements(data.announcements);
+        } else {
+          console.error("Unexpected API response:", data);
+          setAnnouncements([]);
+        }
       } catch (error) {
+        console.error("Error fetching announcements:", error);
         toast.error("Failed to fetch announcements.");
+        setAnnouncements([]);
       }
     };
-
+  
     fetchAnnouncements();
     setUserRole(localStorage.getItem("role"));
   }, []);
 
   const handleAnnouncementAdded = (newAnnouncement) => {
     setAnnouncements((prev) => [newAnnouncement, ...prev]);
+  };
+
+  const handleAnnouncementUpdated = (updatedAnnouncement) => {
+    setAnnouncements((prev) => prev.map((a) => (a._id === updatedAnnouncement._id ? updatedAnnouncement : a)));
+  };
+
+  const handleEditClick = (announcement) => {
+    setAnnouncementToEdit(announcement);
+    setEditModalOpen(true);
   };
 
   const handleDeleteClick = (announcement) => {
@@ -81,7 +101,7 @@ const AnnouncementPage = () => {
         <div className="announcement-container">
           <div className="announcement-header">
             <div className="announcement-tabs">
-              {["All", "Active", "Inactive"].map((tab) => (
+              {["Active", "Inactive", "All"].map((tab) => (
                 <button key={tab} className={`announcement-tab ${activeTab === tab ? "active" : ""}`} onClick={() => setActiveTab(tab)}>
                   {tab}
                 </button>
@@ -106,7 +126,10 @@ const AnnouncementPage = () => {
                     <p className="announcement-description">{announcement.description}</p>
                   </div>
                   {userRole === "admin" && (
-                    <FaTrash className="delete-icon" onClick={() => handleDeleteClick(announcement)} />
+                    <>
+                      <FaEdit className="edit-icon" onClick={() => handleEditClick(announcement)} />
+                      <FaTrash className="delete-icon" onClick={() => handleDeleteClick(announcement)} />
+                    </>
                   )}
                 </div>
               ))
@@ -117,6 +140,7 @@ const AnnouncementPage = () => {
         </div>
       </div>
       {isModalOpen && <AnnouncementModal onClose={() => setIsModalOpen(false)} onAnnouncementAdded={handleAnnouncementAdded} />}
+      {editModalOpen && <EditAnnouncementModal announcementData={announcementToEdit} onClose={() => setEditModalOpen(false)} onAnnouncementUpdated={handleAnnouncementUpdated} />}
       {deleteModalOpen && <DeleteModal onClose={() => setDeleteModalOpen(false)} onConfirm={handleConfirmDelete} />}
     </div>
   );
