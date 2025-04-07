@@ -4,11 +4,16 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3000, // Change this if you want a different port
+    port: 3000,
   },
   resolve: {
     alias: {
-      '@': '/src', // Optional: Allows you to use '@' for absolute imports
+      '@': '/src',
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: ['fs', 'path', 'os'], // add more if needed
     },
   },
 });
